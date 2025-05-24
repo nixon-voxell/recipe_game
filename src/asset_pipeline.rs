@@ -10,7 +10,8 @@ impl Plugin for AssetPipelinePlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(animation_pipeline::AnimationPipelinePlugin);
 
-        app.init_state::<PrefabState>().init_state::<SceneState>()
+        app.init_state::<PrefabState>()
+            .init_state::<SceneState>()
             .add_loading_state(
                 LoadingState::new(PrefabState::LoadingGltf)
                     .continue_to_state(PrefabState::LoadingAnimation)
@@ -26,7 +27,11 @@ impl Plugin for AssetPipelinePlugin {
                         "dynamic_asset.assets.ron",
                     )
                     .load_collection::<SceneAssets>(),
-            ).add_systems(OnEnter(SceneState::Loaded), load_default_scene);
+            )
+            .add_systems(
+                OnEnter(SceneState::Loaded),
+                load_default_scene,
+            );
 
         #[cfg(feature = "dev")]
         app.register_type::<PrefabAssets>();
@@ -55,7 +60,7 @@ fn load_default_scene(
 #[cfg_attr(feature = "dev", derive(Reflect))]
 #[cfg_attr(feature = "dev", reflect(Resource))]
 pub struct SceneAssets {
-    #[asset(key = "scenes/default")]
+    #[asset(key = "scenes.default")]
     pub default_scene: Handle<Gltf>,
 }
 

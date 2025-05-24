@@ -7,7 +7,7 @@
         ],
     ),
 
-    "scenes/default": File (
-        path: "scenes/grab_test.glb",
+    "scenes.default": File (
+        path: "scenes/default_scene.glb",
     ),
 })

@@ -30,21 +30,6 @@ impl Plugin for MovementPlugin {
     }
 }
 
-// -- TESTING SCENE ----------------------------------------------------------------
-// fn spawn_test_scene(
-//     mut commands: Commands,
-//     asset_server: Res<AssetServer>,
-// ) {
-//     commands.spawn(SceneRoot(
-//         asset_server.load(
-//             GltfAssetLabel::Scene(0)
-//                 .from_asset("scenes/movement_test.glb"),
-//         ),
-//     ));
-// }
-
-// -- Keyboard Input ----------------------------------------------------------------
-
 /// Reads keyboard input and emits movement events
 fn keyboard_input(
     mut writer: EventWriter<MovementAction>,
@@ -71,8 +56,6 @@ fn keyboard_input(
         writer.write(MovementAction::Jump);
     }
 }
-
-// -- Movement ----------------------------------------------------------------
 
 /// Updates grounded state by raycasting downwards
 fn update_grounded(

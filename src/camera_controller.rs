@@ -21,10 +21,7 @@ pub(super) struct CameraControllerPlugin;
 
 impl Plugin for CameraControllerPlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins((
-            split_screen::SplitScreenPlugin,
-            // obstacle_visbility::ObstacleVisibilityPlugin,
-        ));
+        app.add_plugins(split_screen::SplitScreenPlugin);
 
         app.add_systems(Update, setup_third_person_camera)
             .add_systems(
@@ -72,7 +69,13 @@ fn obstacle_snap_front(
         };
 
         let mut mask = LayerMask::ALL;
-        mask.remove(GameLayer::Player);
+        mask.remove([
+            GameLayer::Player,
+            GameLayer::Enemy,
+            GameLayer::InventoryItem,
+            GameLayer::Tower,
+            GameLayer::Projectile,
+        ]);
 
         // Exclude the character's own entity from the raycast
         let filter = SpatialQueryFilter::default().with_mask(mask);

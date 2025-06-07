@@ -18,25 +18,11 @@ impl Plugin for InventoryPlugin {
             inventory_input::InventoryInputPlugin,
             item::ItemPlugin,
         ))
-        .add_observer(setup_item_collision)
         .add_observer(handle_item_collection)
         .add_systems(Update, detect_item_collisions);
 
         app.register_type::<Inventory>().register_type::<Item>();
     }
-}
-
-fn setup_item_collision(
-    trigger: Trigger<OnAdd, Item>,
-    mut commands: Commands,
-) {
-    commands.entity(trigger.target()).insert((
-        CollisionLayers::new(
-            GameLayer::InventoryItem,
-            LayerMask::ALL,
-        ),
-        CollisionEventsEnabled,
-    ));
 }
 
 /// Detect item collection
@@ -341,6 +327,10 @@ impl Inventory {
 /// Core data for any item (both towers and ingredients).
 #[derive(Component, Reflect)]
 #[reflect(Component)]
+#[require(
+    CollisionEventsEnabled,
+    CollisionLayers::new(GameLayer::InventoryItem, LayerMask::ALL,)
+)]
 pub struct Item {
     /// A unique identifier that corresponds to [`item::ItemMeta`]
     pub id: String,

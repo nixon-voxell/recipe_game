@@ -11,7 +11,7 @@ mod machine;
 mod physics;
 mod player;
 mod tile;
-mod turret;
+mod tower;
 mod ui;
 mod util;
 
@@ -34,7 +34,7 @@ impl Plugin for AppPlugin {
             inventory::InventoryPlugin,
             player::PlayerPlugin,
             machine::MachinePlugin,
-            turret::TurretPlugin,
+            tower::TowerPlugin,
             tile::TilePlugin,
             enemy::EnemyPlugin,
         ));

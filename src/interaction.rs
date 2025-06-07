@@ -160,11 +160,6 @@ fn setup_interactable_outline(
             colour: MARK_COLOR,
         };
 
-        commands.entity(entity).insert(CollisionLayers::new(
-            GameLayer::Interactable,
-            LayerMask::ALL,
-        ));
-
         if q_meshes.contains(entity) {
             commands
                 .entity(entity)
@@ -186,6 +181,10 @@ fn setup_interactable_outline(
 /// An entity that can be interacted.
 #[derive(Component, Reflect)]
 #[reflect(Component)]
+#[require(CollisionLayers::new(
+    GameLayer::Interactable,
+    LayerMask::ALL,
+))]
 pub struct Interactable;
 
 /// Stores a list of player entities that is marking this entity.
